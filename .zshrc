@@ -114,6 +114,7 @@ alias vim="nvim"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
+# <--- to change title
 function title() {
     # Set terminal tab title. Usage: title "new tab name"
     prefix=${PS1%%\\a*}                  # Everything before: \a
@@ -121,6 +122,18 @@ function title() {
     esearch="${search//\\/\\\\}"         # Change \ to \\ in old title
     PS1="${PS1/$esearch/$@}"             # Search and replace old with new
 }
+
+# <--- to countdown timer
+countdown(){
+    date1=$((`date +%s` + $1));
+    while [ "$date1" -ge `date +%s` ]; do 
+    ## Is this more than 24h away?
+    days=$(($(($(( $date1 - $(date +%s))) * 1 ))/86400))
+    echo -ne "$days day(s) and $(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r"; 
+    sleep 0.1
+    done
+}
+
 
 
 
